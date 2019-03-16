@@ -1,3 +1,5 @@
+from builtins import str
+from builtins import object
 #class StorageFactory(object):
     
 class Storage(object):

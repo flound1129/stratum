@@ -1,3 +1,4 @@
+from builtins import object
 # Copyright (c) 2011-2012, Linus Nordberg
 # Taken from https://github.com/ln5/twisted-socks/
 

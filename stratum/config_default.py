@@ -123,37 +123,3 @@ SIGNING_KEY = None # Message signing is disabled
 SIGNING_ID = None
 #SIGNING_ID = 'stratum.somedomain.com' # Use custom string
 #SIGNING_ID = HOSTNAME # Use hostname as the signing ID
-
-# *********************** IRC / PEER CONFIGURATION *************
-
-IRC_NICK = None # Skip IRC registration
-#IRC_NICK = "stratum" # Use nickname of your choice
-
-# Which hostname / external IP expose in IRC room
-# This should be official HOSTNAME for normal operation.
-IRC_HOSTNAME = HOSTNAME
-
-# Don't change this unless you're creating private Stratum cloud.
-IRC_SERVER = 'irc.freenode.net'
-IRC_ROOM = '#stratum-nodes'
-IRC_PORT = 6667
-
-# Hardcoded list of Stratum nodes for clients to switch when this node is not available.
-PEERS = [
-    {
-        'hostname': 'stratum.bitcoin.cz',
-        'trusted': True, # This node is trustworthy
-        'weight': -1, # Higher number means higher priority for selection.
-                      # -1 will work mostly as a backup when other servers won't work.
-                      # (IRC peers have weight=0 automatically).
-    },
-]
-
-
-'''
-DATABASE_DRIVER = 'MySQLdb'
-DATABASE_HOST = 'palatinus.cz'
-DATABASE_DBNAME = 'marekp_bitcointe'
-DATABASE_USER = 'marekp_bitcointe'
-DATABASE_PASSWORD = '**empty**'
-'''

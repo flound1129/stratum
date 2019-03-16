@@ -1,3 +1,6 @@
+from __future__ import print_function
+from __future__ import absolute_import
+from builtins import object
 from twisted.web.resource import Resource
 from twisted.web.server import Request, Session, NOT_DONE_YET
 from twisted.internet import defer
@@ -6,14 +9,14 @@ import hashlib
 import json
 import string
 
-import helpers
-import semaphore
+from . import helpers
+from . import semaphore
 #from storage import Storage
-from protocol import Protocol, RequestCounter
-from event_handler import GenericEventHandler
-import settings
+from .protocol import Protocol, RequestCounter
+from .event_handler import GenericEventHandler
+from . import settings
 
-import logger
+from . import logger
 log = logger.get_logger('http_transport')
 
 class Transport(object):
@@ -124,7 +127,7 @@ class HttpSession(Session):
     @classmethod
     def on_expire(cls, sess_obj):
         # FIXME: Close protocol connection
-        print "EXPIRING SESSION", sess_obj
+        print("EXPIRING SESSION", sess_obj)
         
         if sess_obj.protocol:
             sess_obj.protocol.connectionLost(Failure(Exception("HTTP session closed")))

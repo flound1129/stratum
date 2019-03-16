@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 from autobahn.twisted.websocket import WebSocketServerProtocol, WebSocketServerFactory
-from protocol import Protocol
-from event_handler import GenericEventHandler
+from .protocol import Protocol
+from .event_handler import GenericEventHandler
 
 class WebsocketServerProtocol(WebSocketServerProtocol, Protocol):
     def connectionMade(self):

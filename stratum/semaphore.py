@@ -1,6 +1,7 @@
+from builtins import object
 from twisted.internet import defer
 
-class Semaphore:
+class Semaphore(object):
     """A semaphore for event driven systems."""
 
     def __init__(self, tokens):

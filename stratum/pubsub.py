@@ -1,6 +1,10 @@
+from __future__ import print_function
+from __future__ import absolute_import
+from builtins import str
+from builtins import object
 import weakref
-from connection_registry import ConnectionRegistry
-import custom_exceptions
+from .connection_registry import ConnectionRegistry
+from . import custom_exceptions
 import hashlib
 
 def subscribe(func):
@@ -135,7 +139,7 @@ class Pubsub(object):
             # because it uses weak reference there.
             del session['subscriptions'][key]
         except KeyError:
-            print "Warning: Cannot remove subscription from connection session"
+            print("Warning: Cannot remove subscription from connection session")
             return False
             
         return True
@@ -152,7 +156,7 @@ class Pubsub(object):
             raise custom_exceptions.PubsubException("No session found")
 
         if key == None:    
-            sub = [ sub for sub in session.get('subscriptions', {}).values() if sub.event == event ]
+            sub = [ sub for sub in list(session.get('subscriptions', {}).values()) if sub.event == event ]
             try:
                 return sub[0]
             except IndexError:

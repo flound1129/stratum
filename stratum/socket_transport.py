@@ -1,13 +1,14 @@
+from __future__ import absolute_import
 from twisted.internet.protocol import ServerFactory
 from twisted.internet.protocol import ReconnectingClientFactory
 from twisted.internet import reactor, defer, endpoints
 
-import socksclient
-import custom_exceptions
-from protocol import Protocol, ClientProtocol
-from event_handler import GenericEventHandler
+from . import socksclient
+from . import custom_exceptions
+from .protocol import Protocol, ClientProtocol
+from .event_handler import GenericEventHandler
 
-import logger
+from . import logger
 log = logger.get_logger('socket_transport')
 
 def sockswrapper(proxy, dest):

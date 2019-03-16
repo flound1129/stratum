@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import absolute_import
 import re
 def setup():
     '''
@@ -11,14 +13,14 @@ def setup():
     '''
     
     def read_values(cfg):
-        for varname in cfg.__dict__.keys():
+        for varname in list(cfg.__dict__.keys()):
             if varname.startswith('__'):
                 continue
             
             value = getattr(cfg, varname)
             yield (varname, value)
 
-    import config_default
+    from . import config_default
     
     try:
         import config
@@ -40,13 +42,13 @@ def setup():
             module.__dict__[name] = value
 
     if module.__dict__['DEBUG'] and changes:
-        print "----------------"
-        print "Custom settings:"
-        for k, v in changes.items():
+        print("----------------")
+        print("Custom settings:")
+        for k, v in list(changes.items()):
             if 'passw' in k.lower():
-                print k, ": ********"
+                print(k, ": ********")
             else:
-                print k, ":", v
-        print "----------------"
+                print(k, ":", v)
+        print("----------------")
         
 setup()

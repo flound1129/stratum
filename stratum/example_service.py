@@ -1,13 +1,15 @@
+from __future__ import absolute_import
+from builtins import range
 from twisted.internet import defer
 from twisted.internet import reactor
 from twisted.names import client
 import random
 import time
 
-from services import GenericService, signature, synchronous
-import pubsub
+from .services import GenericService, signature, synchronous
+from . import pubsub
 
-import logger
+from . import logger
 log = logger.get_logger('example')
 
 class ExampleService(GenericService):

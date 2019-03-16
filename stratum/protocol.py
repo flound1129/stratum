@@ -1,3 +1,6 @@
+from __future__ import absolute_import
+from builtins import str
+from builtins import object
 import json
 #import jsonical
 import time
@@ -8,13 +11,13 @@ from twisted.internet import defer, reactor, error
 from twisted.python.failure import Failure
 
 #import services
-import stats
-import signature
-import custom_exceptions
-import connection_registry
-import settings
+from . import stats
+from . import signature
+from . import custom_exceptions
+from . import connection_registry
+from . import settings
 
-import logger
+from . import logger
 log = logger.get_logger('protocol')
 
 class RequestCounter(object):

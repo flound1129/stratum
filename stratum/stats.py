@@ -1,5 +1,9 @@
+from __future__ import division
+from __future__ import absolute_import
+from builtins import object
+from past.utils import old_div
 import time
-import logger
+from . import logger
 log = logger.get_logger('stats')
 
 class PeerStats(object):
@@ -23,7 +27,7 @@ class PeerStats(object):
         
     @classmethod
     def print_stats(cls):
-        if cls.counter and float(cls.changes) / cls.counter < 0.05:
+        if cls.counter and old_div(float(cls.changes), cls.counter) < 0.05:
             # Print connection stats only when more than
             # 5% connections change to avoid log spam
             return

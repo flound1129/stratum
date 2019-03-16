@@ -1,10 +1,14 @@
+from __future__ import absolute_import
+from builtins import str
+from builtins import object
 from twisted.internet import defer, threads
 from twisted.python import log
 import hashlib
 import weakref
 import re
 
-import custom_exceptions
+from . import custom_exceptions
+from future.utils import with_metaclass
 
 VENDOR_RE = re.compile(r'\[(.*)\]')
 
@@ -96,7 +100,7 @@ class ServiceFactory(object):
             raise custom_exceptions.ServiceNotFoundException("Class for given service type isn't registered")
 
         last_found = None        
-        for _, _cls in vendors.items():
+        for _, _cls in list(vendors.items()):
             last_found = _cls
             if last_found.is_default:
                 return last_found
@@ -197,7 +201,7 @@ def synchronous(func):
 
 def admin(func):
     '''Requires an extra first parameter with superadministrator password'''
-    import settings
+    from . import settings
     def inner(*args, **kwargs):
         if not len(args):
             raise custom_exceptions.UnauthorizedException("Missing password")
@@ -223,8 +227,7 @@ class ServiceMetaclass(type):
         super(ServiceMetaclass, cls).__init__(name, bases, _dict)
         ServiceFactory.register_service(cls, _dict)
         
-class GenericService(object):
-    __metaclass__ = ServiceMetaclass
+class GenericService(with_metaclass(ServiceMetaclass, object)):
     service_type = None
     service_vendor = None
     is_default = None
@@ -241,10 +244,10 @@ class ServiceDiscovery(GenericService):
     is_default = True
     
     def list_services(self):
-        return ServiceFactory.registry.keys()
+        return list(ServiceFactory.registry.keys())
     
     def list_vendors(self, service_type):
-        return ServiceFactory.registry[service_type].keys()
+        return list(ServiceFactory.registry[service_type].keys())
     
     def list_methods(self, service_name):
         # Accepts also vendors in square brackets: firstbits[firstbits.com]
@@ -255,7 +258,7 @@ class ServiceDiscovery(GenericService):
         service = ServiceFactory.lookup(service_type, vendor)
         out = []
         
-        for name, obj in service.__dict__.items():
+        for name, obj in list(service.__dict__.items()):
             
             if name.startswith('_'):
                 continue
